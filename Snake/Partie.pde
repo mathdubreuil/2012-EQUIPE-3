@@ -67,6 +67,7 @@ public class Partie {
         yRoche = floor(random(rows));
         if(grilleJeux[(int)(xRoche/scl)][(int)(yRoche/scl)] == false){
           emplacementLibre = true;
+          grilleJeux[(int)(xRoche/scl)][(int)(yRoche/scl)] = false;
         }  
       }
       roches.add( new PVector(xRoche, yRoche));
@@ -78,48 +79,45 @@ public class Partie {
     if (serpent.mangerPomme(pomme)) {
       nouvellePomme();
       nouvelleRoche();
+      initialiserGrilleJeux();
     }
-    if (serpent.mangerRoche(roches)) {
+    if (serpent.estmort() || serpent.mangerRoche(roches)) {
       finPartie();
-    }
-    if (serpent.estmort()){
-      finPartie();
-    }
-    serpent.miseAjour();
-    initialiserGrilleJeux();
-    if((int)(serpent.getX()/scl) == -1){
-      grilleJeux[0][(int)(serpent.getY()/scl)] = true;
-    }
-    else if((int)(serpent.getY()/scl) == -1){
-      grilleJeux[(int)(serpent.getX()/scl)][0] = true;
-    }
-    else if((int)(serpent.getY()/scl) == -1 && (int)(serpent.getY()/scl) == -1){
-      grilleJeux[0][0] = true;
-    }
-    else{
-      grilleJeux[(int)(serpent.getX()/scl)][(int)(serpent.getY()/scl)] = true;
-    } 
-    for (PVector corp : serpent.getCorps()) {
-      grilleJeux[(int)(corp.x/scl)][(int)(corp.y/scl)] = true;
-    }
-    grilleJeux[(int)(pomme.x/scl)][(int)(pomme.y/scl)] = true;   
-    for (PVector roche : roches) {
-      grilleJeux[(int)(roche.x/scl)][(int)(roche.y/scl)] = true;
-    }
-    
-    serpent.afficher();
-    
-    image(imagePomme, pomme.x, pomme.y);
-    for (PVector roche : roches) {
-      image(imageRoche, roche.x, roche.y);
-    }
-    fill(0);
-    rect(width-200, 0, 200, height);
-    fill(255);
-    textSize(16);
-    textAlign(LEFT);
-    text("Temps : " + conteurTemps.getTemps(), width-150, 100);
-    text("Pointage : " + serpent.total, width-150, 400);
+    } else{
+      serpent.miseAjour();
+      if((int)(serpent.getX()/scl) == -1){
+        grilleJeux[0][(int)(serpent.getY()/scl)] = true;
+      }
+      else if((int)(serpent.getY()/scl) == -1){
+        grilleJeux[(int)(serpent.getX()/scl)][0] = true;
+      }
+      else if((int)(serpent.getY()/scl) == -1 && (int)(serpent.getY()/scl) == -1){
+        grilleJeux[0][0] = true;
+      }
+      else{
+        grilleJeux[(int)(serpent.getX()/scl)][(int)(serpent.getY()/scl)] = true;
+      } 
+      for (PVector corp : serpent.getCorps()) {
+        grilleJeux[(int)(corp.x/scl)][(int)(corp.y/scl)] = true;
+      }
+      grilleJeux[(int)(pomme.x/scl)][(int)(pomme.y/scl)] = true;   
+      for (PVector roche : roches) {
+        grilleJeux[(int)(roche.x/scl)][(int)(roche.y/scl)] = true;
+      }
+      
+      serpent.afficher();
+      image(imagePomme, pomme.x, pomme.y);
+      for (PVector roche : roches) {
+        image(imageRoche, roche.x, roche.y);
+      }
+      fill(0);
+      rect(width-200, 0, 200, height);
+      fill(255);
+      textSize(16);
+      textAlign(LEFT);
+      text("Temps : " + conteurTemps.getTemps(), width-150, 100);
+      text("Pointage : " + serpent.total, width-150, 400);
+    }    
   }
   
   public void toucheAppuyer(int x, int y) {
