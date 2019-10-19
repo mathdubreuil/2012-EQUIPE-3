@@ -13,8 +13,9 @@ public class Partie {
   int derniereToucheAppuyer = 39;
   PImage imagePomme = loadImage("Pomme.png");
   PImage imageRoche = loadImage("Roche.png");
-  int cols = (width-200)/scl;
-  int rows = height/scl;
+  PImage UI = loadImage("grass_BG_UI.png");
+  int cols = (width-40)/scl;
+  int rows = (height-40)/scl;
   
   public Partie() {
     nouvellePartie();
@@ -22,6 +23,7 @@ public class Partie {
 
   public void nouvellePartie() {
     frameRate(10);
+    UI.resize(1000, 840);
     partiefini = false;
     pointage = 0;
     initialiserGrilleJeux();
@@ -48,8 +50,8 @@ public class Partie {
     float xPomme = 0;
     float yPomme = 0;
     while(!emplacementLibre){
-      xPomme = floor(random(cols));
-      yPomme = floor(random(rows));
+      xPomme = constrain(floor(random(cols)), 1, cols);
+      yPomme = constrain(floor(random(rows)), 1, rows);
       if(grilleJeux[(int)(xPomme/scl)][(int)(yPomme/scl)] == false){
         emplacementLibre = true;
       }  
@@ -63,8 +65,8 @@ public class Partie {
       float xRoche = 0;
       float yRoche = 0;
       while(!emplacementLibre){
-        xRoche = floor(random(cols));
-        yRoche = floor(random(rows));
+        xRoche = constrain(floor(random(cols)), 1, cols);
+        yRoche = constrain(floor(random(rows)), 1, rows);
         if(grilleJeux[(int)(xRoche/scl)][(int)(yRoche/scl)] == false){
           emplacementLibre = true;
           grilleJeux[(int)(xRoche/scl)][(int)(yRoche/scl)] = false;
@@ -76,14 +78,16 @@ public class Partie {
   }
 
   public void dessinerJeux() {
-    if (serpent.mangerPomme(pomme)) {
+    if (serpent.mangerPomme(pomme)) { 
+      mangerPomme.play();
       nouvellePomme();
       nouvelleRoche();
-      initialiserGrilleJeux();
     }
     if (serpent.estmort() || serpent.mangerRoche(roches)) {
-      finPartie();
+      mangerRocheMur.play();
+      finPartie();  
     } else{
+      initialiserGrilleJeux();
       serpent.miseAjour();
       if((int)(serpent.getX()/scl) == -1){
         grilleJeux[0][(int)(serpent.getY()/scl)] = true;
@@ -110,13 +114,12 @@ public class Partie {
       for (PVector roche : roches) {
         image(imageRoche, roche.x, roche.y);
       }
-      fill(0);
-      rect(width-200, 0, 200, height);
+      image(UI,0,-40);
       fill(255);
       textSize(16);
       textAlign(LEFT);
-      text("Temps : " + conteurTemps.getTemps(), width-150, 100);
-      text("Pointage : " + serpent.total, width-150, 400);
+      text("Temps : " + conteurTemps.getTemps(), 150, 20);
+      text("Pointage : " + serpent.total, width-300, 20);
     }    
   }
   

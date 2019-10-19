@@ -54,22 +54,22 @@ public class Serpent{
         return true;
       }
     }
-    if(dist(x, y, 0-scl, y) < 1){
+    if(dist(x, y, 40-scl, y) < 1){
       corps.clear();
       formes.clear();
       return true;
     }
-    if(dist(x, y, x,0-scl) < 1){
+    if(dist(x, y, x,40-scl) < 1){
       corps.clear();
       formes.clear();
       return true;
     }
-    if(dist(x, y, width-200,y) < 1){
+    if(dist(x, y, width-40,y) < 1){
       corps.clear();
       formes.clear();
       return true;
     }
-    if(dist(x, y, x,height) < 1){
+    if(dist(x, y, x,height-40) < 1){
       corps.clear();
       formes.clear();
       return true;
@@ -88,13 +88,13 @@ public class Serpent{
     x = x + xspeed*scl;
     y = y + yspeed*scl;
 
-    x = constrain(x, 0-scl, width-200);
-    y = constrain(y, 0-scl, height);
+    x = constrain(x, 40-scl, width-40);
+    y = constrain(y, 40-scl, height-40);
   }
   
   public void afficher() {
     fill(0,255,0);
-    rect(x, y, scl, scl);
+    ellipse(x+(scl/2), y+(scl/2), scl, scl);
     for (int i = 0; i < corps.size(); i++) {
       //rect(corps.get(i).x, corps.get(i).y, scl, scl);
       genererForme(corps.get(i).x,corps.get(i).y,scl,formes.get(i));
@@ -133,13 +133,13 @@ public class Serpent{
   public void genererForme(float x, float y, int scale, String nomForme){  
     switch(nomForme){
       case "triangle":
-        //triangle(x, y, x+(scale/2), y+scale, x-(scale/2),y+scale);
+        triangle(x+(scale/2), y, x, y+scale, x+scale,y+scale);
         break;
       case "rect":
         rect(x, y, scale, scale);
         break;
       case "quad":
-        //quad(x+(scale/4), y, x-(scale/4), y, x+(scale/2), y+scale, x-(scale/2), y+scale);
+        quad((x+(scale/2))+(scale/4), y, (x+(scale/2))-(scale/4), y, x, y+scale, x+scale, y+scale);
         break;
       case "ellipse":
         ellipse(x+(scale/2), y+(scale/2), scale, scale);
