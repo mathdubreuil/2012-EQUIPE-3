@@ -1,4 +1,5 @@
 import processing.sound.*;
+import processing.video.*;
 
 Partie partie = null;
 SystemeDynamique systemeDynamique = null;
@@ -10,6 +11,8 @@ SoundFile mangerRocheMur;
 PImage imageMask;
 PImage imageTransformer;
 PImage imageSource;
+Movie video;
+boolean movie = false;
 int activeFilterMode = 0;
 
 void setup() {
@@ -24,6 +27,7 @@ void setup() {
   imageMask.resize(1000, 800);
   imageTransformer = loadImage("journe2.jpg");
   imageTransformer.resize(1000, 800);
+  video = new Movie(this, "video.mp4");
 }
 
 void draw() {
@@ -34,6 +38,9 @@ void draw() {
   }
   if(systemeDynamique != null){
     systemeDynamique.dessinerSystemeDynamique();
+  }
+  if(movie == true){
+    image(video, 0, 0, 1000, 800);
   }
   switch (activeFilterMode)
     {
@@ -49,39 +56,48 @@ void draw() {
     }
 }
 
+void movieEvent(Movie m) {
+     m.read();
+   }
+
 void keyPressed() {
   if(key == '1'){
+    tint(255, 255, 255, 255);
     systemeDynamique = null;
-    activeFilterMode = -1;
+    activeFilterMode = 0;
+    movie = false;
     particleSystem = new ParticleSystem(countParticles);
     partie = new Partie();
   }
   if(key == '2'){
+    tint(255, 255, 255, 255);
     background(fond);
     particleSystem = null;
     partie = null;
-    activeFilterMode = -1;
+    movie = false;
+    activeFilterMode = 0;
     systemeDynamique = new SystemeDynamique();
   }
   if(key == '3'){
-    tint(0, 255, 0, 200);
-    background(imageSource);
     particleSystem = null;
     partie = null;
     systemeDynamique = null;
+    movie = false;
+    tint(0, 255, 0, 200);
+    background(imageSource);
     imageTransformer.mask(imageMask);
     activeFilterMode = 0;  
     image(imageTransformer, 0, 0);
   }
   if(key == '4'){
-    tint(0, 255, 0, 200);
-    background(imageSource);
+    frameRate(60);
+    tint(255, 255, 255, 255);
     particleSystem = null;
     partie = null;
     systemeDynamique = null;
-    imageTransformer.mask(imageMask);
     activeFilterMode = 0;  
-    image(imageTransformer, 0, 0);
+    video.loop();
+    movie = true;
   }
   if(partie != null && partie.enJeux()){
     if (keyCode == UP && partie.derniereToucheAppuyer != 40) {

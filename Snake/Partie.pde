@@ -31,7 +31,6 @@ public class Partie {
     imagePomme.resize(scl, scl);
     imageRoche.resize(scl, scl);
     nouvellePomme();
-    System.out.println("Nouvelle partie");
     temps = new Timer("conteurTemps");
     conteurTemps = new Temps();
     temps.schedule(conteurTemps, 0, 1000);
@@ -42,7 +41,6 @@ public class Partie {
     this.temps.purge();
     roches.clear();
     partiefini = true;
-    System.out.println("Partie fini!!");
   }
   
   void nouvellePomme() {
