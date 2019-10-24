@@ -121,7 +121,7 @@ public class Partie {
     }    
   }
   
-  public void toucheAppuyer(int x, int y) {
+  public void toucheAppuyer() {
     if (keyCode == UP) {
       serpent.direction(0, -1);
     } else if (keyCode == DOWN) {

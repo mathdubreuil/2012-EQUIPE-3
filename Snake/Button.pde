@@ -1,12 +1,12 @@
 class Button {
   int x;
   int y;
-  String label;
+  String text;
   
-  Button(int x, int y, String label){
+  Button(int x, int y, String text){
     this.x = x;
     this.y = y;
-    this.label = label;
+    this.text = text;
   }
   
   void draw(){
@@ -16,13 +16,13 @@ class Button {
       fill(#69a210);
     } 
     
-    rect(x, y, textWidth(label), 40);
+    rect(x, y, textWidth(text), 40);
     fill(0);
-    text(label, x, y + 30);
+    text(text, x, y + 30);
   }
   
   boolean over(){
-    if (mouseX >= x && mouseY >= y && mouseX <= x + textWidth(label) && mouseY <= y + 30) {
+    if (mouseX >= x && mouseY >= y && mouseX <= x + textWidth(text) && mouseY <= y + 30) {
       return true;
     } else {
         return false;
