@@ -10,10 +10,10 @@ class Button {
   }
   
   void draw(){
-    fill(#7f6d5a);
+    fill(#7f6d5a, 0);
     
     if (over()) {
-      fill(#69a210);
+      fill(#69a210, 170);
     } 
     
     rect(x, y, textWidth(text), 40);

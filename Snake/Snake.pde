@@ -75,7 +75,7 @@ void setup() {
   clickButton = new SoundFile(this, "click.mp3");
   
   menuMusic = new SoundFile(this, "menu_music.mp3");
-  menuMusic.play();
+  menuMusic.loop();
 }
 
 void draw() {
@@ -102,7 +102,8 @@ void draw() {
 }
 
 void drawForEnd() {
-  fill(#7f6d5a);
+  
+  fill(#6c5f48, 30);
   rect(width/2 - 200, height/2 - 150, 400, 300, 7);
   textSize(60);
   fill(0);
@@ -122,7 +123,8 @@ void drawForEnd() {
 
 
 void drawForPause() {
-  fill(#7f6d5a);
+  
+  fill(#6c5f48, 30);
   rect(width/2 - 200, height/2 - 175, 400, 350, 7);
   textSize(60);
   fill(0);
@@ -147,16 +149,7 @@ void drawForPause() {
 void drawForGame() {
   if(partie != null) {
      if (partie.partiefini) {
-      image(fond, 0, 0);
-      frameRate(60);
-      tint(255, 255, 255, 255);
-      particleSystem = null;
-      partie = null;
-      systemeDynamique = null;
-      activeFilterMode = 0;  
-      movie = true;
-      video.play();
-      state = stateMenu;
+      state = stateEndGame;
     }
   }
  
@@ -392,7 +385,7 @@ void mousePressed(){
     } else if (menuPause.over()) {
       clickButton.play();
       state = stateMenu;
-      menuMusic.play();
+      menuMusic.loop();
     }
     break;
    case stateEndGame: 
@@ -404,7 +397,7 @@ void mousePressed(){
     } else if (menuEndGame.over()) {
       clickButton.play();
       state = stateMenu;
-      menuMusic.play();
+      menuMusic.loop();
     }
     break;
   default:
