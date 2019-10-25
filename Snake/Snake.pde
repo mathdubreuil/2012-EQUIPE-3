@@ -4,6 +4,9 @@ import processing.video.*;
 final int stateGame = 0;
 final int stateMenu = 1;
 final int stateHelp = 2;
+final int statePause = 3;
+final int stateEndGame = 4;
+
 int state = stateMenu;
 float angle = 0; 
 
@@ -11,7 +14,7 @@ Partie partie = null;
 SystemeDynamique systemeDynamique = null;
 ParticleSystem particleSystem = null;
 int countParticles = 250;
-
+int currentScore = 0;
 SoundFile mangerPomme;
 SoundFile mangerRocheMur;
 SoundFile clickButton;
@@ -28,10 +31,17 @@ PImage snakeHead;
 PImage rock;
 PImage apple;
 
-Button newGame ;
+Button newGame;
 Button help;
 Button quitGame;
 Button backMenu;
+
+Button newGamePause;
+Button resumeGamePause;
+Button menuPause;
+
+Button newGameEndGame;
+Button menuEndGame;
 
 boolean movie = false;
 int activeFilterMode = 0;
@@ -50,6 +60,7 @@ void setup() {
   imageMask.resize(1000, 800);
   imageTransformer = loadImage("journe2.jpg");
   imageTransformer.resize(1000, 800);
+  
   video = new Movie(this, "video.mp4");
   
   snakeBody = loadImage("Serpent_corps.png");
@@ -68,6 +79,7 @@ void setup() {
 }
 
 void draw() {
+  // different states of the game uses different draw 
   switch(state) {
   case stateGame:
     drawForGame();
@@ -78,13 +90,76 @@ void draw() {
   case stateHelp: 
     drawForHelp();
     break;
+  case statePause: 
+    drawForPause();
+    break;
+  case stateEndGame: 
+    drawForEnd();
+    break;
   default:
     break;
   }  
 }
 
-void drawForGame() {
+void drawForEnd() {
+  fill(#7f6d5a);
+  rect(width/2 - 200, height/2 - 150, 400, 300, 7);
+  textSize(60);
+  fill(0);
+
+  String endGameTitle = " JEU TERMINÉ ";
+  text(endGameTitle, width/2 - textWidth(endGameTitle)/2, height/2 - 80);
+  textSize(28);
   
+  String newGameText =  "   Nouvelle partie   ";
+  newGameEndGame = new Button((int)(width/2 - textWidth(newGameText)/2), height/2 - 40 , newGameText);
+  newGameEndGame.draw();
+  
+  String menuText =  "   Menu principale   ";
+  menuEndGame = new Button((int)(width/2 - textWidth(menuText)/2), height/2 + 20, menuText);
+  menuEndGame.draw();
+}
+
+
+void drawForPause() {
+  fill(#7f6d5a);
+  rect(width/2 - 200, height/2 - 175, 400, 350, 7);
+  textSize(60);
+  fill(0);
+
+  String pauseTitle = " PAUSE ";
+  text(pauseTitle, width/2 - textWidth(pauseTitle)/2, height/2 - 100);
+  textSize(28);
+
+  String resumeGameText =  "   Reprendre la partie   ";
+  resumeGamePause = new Button((int)(width/2 - textWidth(resumeGameText)/2), height/2 - 60, resumeGameText);
+  resumeGamePause.draw();
+  
+  String newGameText =  "   Nouvelle partie   ";
+  newGamePause = new Button((int)(width/2 - textWidth(newGameText)/2), height/2 + 10, newGameText);
+  newGamePause.draw();
+  
+  String menuText =  "   Menu principale   ";
+  menuPause = new Button((int)(width/2 - textWidth(menuText)/2), height/2 + 80, menuText);
+  menuPause.draw();
+}
+
+void drawForGame() {
+  if(partie != null) {
+     if (partie.partiefini) {
+      image(fond, 0, 0);
+      frameRate(60);
+      tint(255, 255, 255, 255);
+      particleSystem = null;
+      partie = null;
+      systemeDynamique = null;
+      activeFilterMode = 0;  
+      movie = true;
+      video.play();
+      state = stateMenu;
+    }
+  }
+ 
   
   if (partie != null && particleSystem != null && !partie.partiefini) {
     background(fond);
@@ -129,14 +204,22 @@ void drawForHelp() {
   line(120, 250 , width - 120, 250);
   
   textSize(22);
+  String intro = "Déplacer le serpent pour manger les pommes! Éviter les obstables et les murs!";
+  text(intro, width/2 - textWidth(intro)/2, 300);
+
+  line(120, 340 , width - 120, 340);
+  
+  textSize(22);
   String movement = "← ↑ ↓ →  : Déplacer le serpent";
-  text(movement, width/2 - textWidth(movement)/2, 300);
+  text(movement, width/2 - textWidth(movement)/2, 380);
+  String pause = "p  : Pause la partie en cours";
+  text(pause, width/2 - textWidth(pause)/2, 420);
   String effecte = "e  : Ajoute l'effet erode";
-  text(effecte, width/2 - textWidth(effecte)/2, 340);
+  text(effecte, width/2 - textWidth(effecte)/2, 460);
   String effectg = "g  : Ajoute l'effet grey";
-  text(effectg, width/2 - textWidth(effectg)/2, 380);
-  String effectd = "g  : Ajoute l'effet dilate";
-  text(effectd, width/2 - textWidth(effectd)/2, 420);
+  text(effectg, width/2 - textWidth(effectg)/2, 500);
+  String effectd = "d  : Ajoute l'effet dilate";
+  text(effectd, width/2 - textWidth(effectd)/2, 540);
 }
 
 void drawForMenu() {
@@ -198,40 +281,40 @@ void keyPressed() {
       case '1':
         startGame();
         break;
+      case '2':
+        tint(255, 255, 255, 255);
+        background(fond);
+        particleSystem = null;
+        partie = null;
+        movie = false;
+        activeFilterMode = 0;
+        systemeDynamique = new SystemeDynamique();
+        break;  
+      case '3':
+        particleSystem = null;
+        partie = null;
+        systemeDynamique = null;
+        movie = false;
+        tint(0, 255, 0, 200);
+        background(imageSource);
+        imageTransformer.mask(imageMask);
+        activeFilterMode = 0;  
+        image(imageTransformer, 0, 0);
+        break;  
+      case '4':
+        frameRate(60);
+        tint(255, 255, 255, 255);
+        particleSystem = null;
+        partie = null;
+        systemeDynamique = null;
+        activeFilterMode = 0;  
+        video.loop();
+        movie = true;
+        break;  
       default:
         break;
     }
-   
-    if(key == '2'){
-      tint(255, 255, 255, 255);
-      background(fond);
-      particleSystem = null;
-      partie = null;
-      movie = false;
-      activeFilterMode = 0;
-      systemeDynamique = new SystemeDynamique();
-    }
-    if(key == '3'){
-      particleSystem = null;
-      partie = null;
-      systemeDynamique = null;
-      movie = false;
-      tint(0, 255, 0, 200);
-      background(imageSource);
-      imageTransformer.mask(imageMask);
-      activeFilterMode = 0;  
-      image(imageTransformer, 0, 0);
-    }
-    if(key == '4'){
-      frameRate(60);
-      tint(255, 255, 255, 255);
-      particleSystem = null;
-      partie = null;
-      systemeDynamique = null;
-      activeFilterMode = 0;  
-      video.loop();
-      movie = true;
-    }
+
     if(partie != null && partie.enJeux()){
       if (keyCode == UP && partie.derniereToucheAppuyer != 40) {
         partie.derniereToucheAppuyer = keyCode;
@@ -246,21 +329,32 @@ void keyPressed() {
         partie.derniereToucheAppuyer = keyCode;
         partie.toucheAppuyer();
       }
-    }  
-    if(keyCode == 'E'){
-      activeFilterMode = 1;
     }
-    if(keyCode == 'G'){
-      activeFilterMode = 2;
-    }
-    if(keyCode == 'D'){
-      activeFilterMode = 3;
+    switch(keyCode) {
+      case 'E':
+        activeFilterMode = 1;
+        break;
+      case 'G':
+        activeFilterMode = 2;
+        break;
+      case 'D':
+        activeFilterMode = 3;
+        break;
+      case 'P':
+        if (partie != null) { // TO REMOVE (creates error when you press P if you press on 2 3 4 since the game is null)
+          state = statePause;
+          partie.pause = true;
+        }
+        break;
+      default:
+        break;
     }
   }
 }
 
 
 void mousePressed(){
+  // check which state to see if the user clicked on any buttons
   switch(state) {
   case stateGame:
     break;
@@ -284,6 +378,34 @@ void mousePressed(){
        clickButton.play();
        state = stateMenu;
     } 
+    break;
+   case statePause: 
+    if (resumeGamePause.over()) {    
+      clickButton.play();
+      state = stateGame; 
+      partie.pause = false;
+    } else if (newGamePause.over()) {
+      clickButton.play();
+      menuMusic.stop();
+      state = stateGame;
+      startGame();
+    } else if (menuPause.over()) {
+      clickButton.play();
+      state = stateMenu;
+      menuMusic.play();
+    }
+    break;
+   case stateEndGame: 
+    if (newGameEndGame.over()) {
+      clickButton.play();
+      menuMusic.stop();
+      state = stateGame;
+      startGame();
+    } else if (menuEndGame.over()) {
+      clickButton.play();
+      state = stateMenu;
+      menuMusic.play();
+    }
     break;
   default:
     break;
