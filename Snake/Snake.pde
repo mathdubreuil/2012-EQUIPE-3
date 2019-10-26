@@ -363,7 +363,7 @@ void drawForMenu() {
   strokeWeight(1);
   textFont(typoTexte);
   textSize(28);
-  String newGameText =  "   Nouvelle Partie   ";
+  String newGameText =  "   Nouvelle partie   ";
   newGame = new Button((int)(width/2 - textWidth(newGameText)/2), 110, newGameText);
   newGame.draw();
   
