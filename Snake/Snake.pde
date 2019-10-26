@@ -169,7 +169,7 @@ void drawForEnd() {
   fill(0);
   
   textFont(typoTitre);
-  textSize(60);
+  textSize(50);
   String endGameTitle = " JEU TERMINÉ ";
   text(endGameTitle, width/2 - textWidth(endGameTitle)/2, height/2 - 80);
  
