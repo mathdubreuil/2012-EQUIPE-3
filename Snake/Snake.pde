@@ -14,6 +14,7 @@ final int stateFlute = 8;
 float serpenty=880;
 float serpentspeed ;
 int stateFluteProgramme=0;
+int i;
 
 int state = stateMenu;
 
@@ -33,6 +34,9 @@ SoundFile C;
 SoundFile V;
 
 Movie video;
+
+PFont typoTitre;
+PFont typoTexte;
 
 PImage imgflute;
 PImage imgserpent;
@@ -87,6 +91,9 @@ void setup() {
   
   video = new Movie(this, "video.mp4");
   
+  typoTitre = loadFont("HelveticaNeue-Medium-64.vlw");
+  typoTexte = loadFont("BellMTBold-48.vlw");
+  
   snakeBody = loadImage("Serpent_corps.png");
   snakeBody.resize(868, 420);
   snakeHead = loadImage("Serpent_tête.png");
@@ -116,6 +123,11 @@ void setup() {
 
 void draw() {
   imageMode(CORNER);
+  if(i == 20){
+    i = 0;
+  }else{
+    i++;
+  }
   // different states of the game uses different draw 
   switch(state) {
   case stateGame:
@@ -153,13 +165,17 @@ void drawForEnd() {
   
   fill(#6c5f48, 30);
   rect(width/2 - 200, height/2 - 150, 400, 300, 7);
-  textSize(60);
+  
   fill(0);
-
+  
+  textFont(typoTitre);
+  textSize(60);
   String endGameTitle = " JEU TERMINÉ ";
   text(endGameTitle, width/2 - textWidth(endGameTitle)/2, height/2 - 80);
-  textSize(28);
+ 
   
+   textFont(typoTexte);
+    textSize(28);
   String newGameText =  "   Nouvelle partie   ";
   newGameEndGame = new Button((int)(width/2 - textWidth(newGameText)/2), height/2 - 40 , newGameText);
   newGameEndGame.draw();
@@ -174,13 +190,17 @@ void drawForPause() {
   
   fill(#6c5f48, 30);
   rect(width/2 - 200, height/2 - 175, 400, 350, 7);
-  textSize(60);
+  
   fill(0);
-
+  
+  textFont(typoTitre);
+  textSize(60);
   String pauseTitle = " PAUSE ";
   text(pauseTitle, width/2 - textWidth(pauseTitle)/2, height/2 - 100);
-  textSize(28);
+  
 
+ textFont(typoTexte);
+ textSize(28);
   String resumeGameText =  "   Reprendre la partie   ";
   resumeGamePause = new Button((int)(width/2 - textWidth(resumeGameText)/2), height/2 - 60, resumeGameText);
   resumeGamePause.draw();
@@ -229,8 +249,10 @@ void drawForCredit(){
 void drawForFlute(){
   imageMode(CENTER);
   image(imgfond,500,400);
-  textSize(37);
+  
   fill(203, 198, 130);
+  textFont(typoTexte);
+  textSize(37);
   text("Découvrez ce qui arrive lorsque vous \nappuyer sur l'une des lettres z,x,c et v\nde votre clavier", 50,100);
   image(imgflute, 850, 400);
   image(imgserpent,50,serpenty);
@@ -298,13 +320,16 @@ void drawForHelp() {
   backMenu = new Button(50, 50, backText);
   backMenu.draw();
   
+  
+  
+  textFont(typoTitre);
   textSize(80);
-
   String title = "COMMENT JOUER ?";
   text(title, width/2 - textWidth(title)/2, 200);
   strokeWeight(5);
   line(120, 250 , width - 120, 250);
   
+  textFont(typoTexte);
   textSize(22);
   String intro = "Déplacer le serpent pour manger les pommes! Éviter les obstables et les murs!";
   text(intro, width/2 - textWidth(intro)/2, 300);
@@ -327,37 +352,39 @@ void drawForHelp() {
 void drawForMenu() {
   tint(255, 255, 255, 255);
   image(fond, 0, 0);
-  textSize(150);
-  fill(0);
-
-  String title = "SNAKE";
-  text(title, width/2 - textWidth(title)/2, 200);
   
-  textSize(28);
+  fill(0);
+  textFont(typoTitre);
+  textSize(100-i);
+  String title = "SNAKE";
+  text(title, width/2 - textWidth(title)/2, 100);
+  
+  
   strokeWeight(1);
-
+  textFont(typoTexte);
+  textSize(28);
   String newGameText =  "   Nouvelle Partie   ";
-  newGame = new Button((int)(width/2 - textWidth(newGameText)/2), 200, newGameText);
+  newGame = new Button((int)(width/2 - textWidth(newGameText)/2), 110, newGameText);
   newGame.draw();
   
   String helpText =  "   Comment Jouer   ";
-  help = new Button((int)(width/2 - textWidth(helpText)/2), 360, helpText);
+  help = new Button((int)(width/2 - textWidth(helpText)/2), 310, helpText);
   help.draw();
   
   String systemeDynamiqueText =  "   Système Dynamique   ";
-  buttonSystemeDynamique = new Button((int)(width/2 - textWidth(systemeDynamiqueText)/2), 240, systemeDynamiqueText);
+  buttonSystemeDynamique = new Button((int)(width/2 - textWidth(systemeDynamiqueText)/2), 160, systemeDynamiqueText);
   buttonSystemeDynamique.draw();
   
   String MaskText =  "   Masque   ";
-  buttonMask = new Button((int)(width/2 - textWidth(MaskText)/2), 280, MaskText);
+  buttonMask = new Button((int)(width/2 - textWidth(MaskText)/2), 210, MaskText);
   buttonMask.draw();
   
   String fluteText =  "   Joueur de Flûte   ";
-  buttonFlute = new Button((int)(width/2 - textWidth(fluteText)/2), 320, fluteText);
+  buttonFlute = new Button((int)(width/2 - textWidth(fluteText)/2), 260, fluteText);
   buttonFlute.draw();
   
   String quitText = "   Quitter   ";
-  quitGame = new Button((int)(width/2 - textWidth(quitText)/2), 400, quitText);
+  quitGame = new Button((int)(width/2 - textWidth(quitText)/2), 360, quitText);
   quitGame.draw();
   
   String stateCredit =  "   Crédit   ";
@@ -660,7 +687,7 @@ void mousePressed(){
           menuMusic.stop();
           state = stateSystemeDynamique; 
           startSystemeDynamique();
-        }if(movie == true){
+        }else if(movie == true){
           clickButton.play();
           menuMusic.stop();
           startCredit();
