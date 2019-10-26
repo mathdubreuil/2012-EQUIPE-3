@@ -180,7 +180,7 @@ void drawForEnd() {
   newGameEndGame = new Button((int)(width/2 - textWidth(newGameText)/2), height/2 - 40 , newGameText);
   newGameEndGame.draw();
   
-  String menuText =  "   Menu principale   ";
+  String menuText =  "   Menu principal   ";
   menuEndGame = new Button((int)(width/2 - textWidth(menuText)/2), height/2 + 20, menuText);
   menuEndGame.draw();
 }
@@ -209,7 +209,7 @@ void drawForPause() {
   newGamePause = new Button((int)(width/2 - textWidth(newGameText)/2), height/2 + 10, newGameText);
   newGamePause.draw();
   
-  String menuText =  "   Menu principale   ";
+  String menuText =  "   Menu principal   ";
   menuPause = new Button((int)(width/2 - textWidth(menuText)/2), height/2 + 80, menuText);
   menuPause.draw();
 }
@@ -331,7 +331,7 @@ void drawForHelp() {
   
   textFont(typoTexte);
   textSize(22);
-  String intro = "Déplacer le serpent pour manger les pommes! Éviter les obstables et les murs!";
+  String intro = "Déplacez le serpent pour manger les pommes! Évitez les obstables et les murs!";
   text(intro, width/2 - textWidth(intro)/2, 300);
 
   line(120, 340 , width - 120, 340);
@@ -371,7 +371,7 @@ void drawForMenu() {
   help = new Button((int)(width/2 - textWidth(helpText)/2), 310, helpText);
   help.draw();
   
-  String systemeDynamiqueText =  "   Système Dynamique   ";
+  String systemeDynamiqueText =  "   Système dynamique   ";
   buttonSystemeDynamique = new Button((int)(width/2 - textWidth(systemeDynamiqueText)/2), 160, systemeDynamiqueText);
   buttonSystemeDynamique.draw();
   
@@ -387,7 +387,7 @@ void drawForMenu() {
   quitGame = new Button((int)(width/2 - textWidth(quitText)/2), 360, quitText);
   quitGame.draw();
   
-  String stateCredit =  "   Crédit   ";
+  String stateCredit =  "   Crédits   ";
   buttonCredit = new Button((int)( textWidth(stateCredit)/2), 700, stateCredit);
   buttonCredit.draw();
 
