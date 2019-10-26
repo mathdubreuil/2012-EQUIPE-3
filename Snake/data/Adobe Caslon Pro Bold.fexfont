@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com_linotype_FontExplorerX_PATH</key>
+	<string>/Users/tatyanapoirier/Library/Application Support/Adobe/CoreSync/plugins/livetype/.r/.8484.otf</string>
+	<key>com_linotype_FontExplorerX_comment</key>
+	<string></string>
+	<key>com_linotype_FontExplorerX_copyright</key>
+	<string>© 1990, 1992, 1996, 2000, 2001 Adobe Systems Incorporated. All rights reserved.</string>
+	<key>com_linotype_FontExplorerX_description</key>
+	<string></string>
+	<key>com_linotype_FontExplorerX_designer</key>
+	<string>Carol Twombly</string>
+	<key>com_linotype_FontExplorerX_designerURL</key>
+	<string></string>
+	<key>com_linotype_FontExplorerX_embeddingRights</key>
+	<string>Aperçu et Impression de l'Incorporation Autorisé</string>
+	<key>com_linotype_FontExplorerX_familyName</key>
+	<array>
+		<string>Adobe Caslon Pro</string>
+	</array>
+	<key>com_linotype_FontExplorerX_fileName</key>
+	<array>
+		<string>.8484.otf</string>
+	</array>
+	<key>com_linotype_FontExplorerX_format</key>
+	<string>OpenType (PostScript Flavored)</string>
+	<key>com_linotype_FontExplorerX_fullName</key>
+	<array>
+		<string>Adobe Caslon Pro Bold</string>
+	</array>
+	<key>com_linotype_FontExplorerX_isBroken</key>
+	<false/>
+	<key>com_linotype_FontExplorerX_isInSystemFolder</key>
+	<false/>
+	<key>com_linotype_FontExplorerX_isSystemFont</key>
+	<false/>
+	<key>com_linotype_FontExplorerX_license</key>
+	<string></string>
+	<key>com_linotype_FontExplorerX_licenseURL</key>
+	<string>http://typekit.com/eulas/0000000000000000000188ba</string>
+	<key>com_linotype_FontExplorerX_manufacturer</key>
+	<string>Adobe Systems Incorporated</string>
+	<key>com_linotype_FontExplorerX_psName</key>
+	<array>
+		<string>ACaslonPro-Bold</string>
+	</array>
+	<key>com_linotype_FontExplorerX_style</key>
+	<array>
+		<string>Regular</string>
+	</array>
+	<key>com_linotype_FontExplorerX_trademark</key>
+	<string>Adobe Caslon is either a registered trademark or a trademark of Adobe Systems Incorporated in the United States and/or other countries.</string>
+	<key>com_linotype_FontExplorerX_uniqueName</key>
+	<array>
+		<string>2.096;ADBE;ACaslonPro-Bold;ADOBE;&lt;TkD-8484-e290505d6a067d62a71b1987e5ffcaeaa59d9f6c&gt;</string>
+	</array>
+	<key>com_linotype_FontExplorerX_vendorName</key>
+	<string>Adobe</string>
+	<key>com_linotype_FontExplorerX_vendorURL</key>
+	<string>http://www.adobe.com/type</string>
+	<key>com_linotype_FontExplorerX_version</key>
+	<string>Version 2.096;PS 2.000;hotconv 1.0.70;makeotf.lib2.5.58329</string>
+	<key>kMDItemDisplayName</key>
+	<string>Adobe Caslon Pro Bold</string>
+	<key>kMDItemTitle</key>
+	<string>Adobe Caslon Pro Bold</string>
+</dict>
+</plist>
