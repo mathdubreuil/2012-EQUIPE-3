@@ -8,7 +8,6 @@ final int statePause = 3;
 final int stateEndGame = 4;
 
 int state = stateMenu;
-float angle = 0; 
 
 Partie partie = null;
 SystemeDynamique systemeDynamique = null;
@@ -28,6 +27,8 @@ PImage imageTransformer;
 PImage imageSource;
 PImage snakeBody;
 PImage snakeHead;
+PImage snakeHeadUp;
+PImage snakeHeadDown;
 PImage rock;
 PImage apple;
 
@@ -43,6 +44,8 @@ Button menuPause;
 Button newGameEndGame;
 Button menuEndGame;
 
+int headStatus = 1; 
+int upDown = 1; 
 boolean movie = false;
 int activeFilterMode = 0;
 
@@ -66,7 +69,8 @@ void setup() {
   snakeBody = loadImage("Serpent_corps.png");
   snakeBody.resize(868, 420);
   snakeHead = loadImage("Serpent_tête.png");
-  snakeHead.resize(362, 313);
+  snakeHeadUp = loadImage("Serpent_tête_bas.png");
+  snakeHeadDown = loadImage("Serpent_tête_haut.png");
   rock = loadImage("Roche.png");
   rock.resize(209, 163);
   apple = loadImage("Pomme.png");
@@ -240,17 +244,36 @@ void drawForMenu() {
 
   image(apple, 50, height - 770);
   image(apple, width - 50 - apple.width, height - 770);
-
+  
   image(snakeBody, 200, 400);
 
-  if (angle >= 0) {
-    angle -= 0.005;
-  } else if (angle < 0) {
-    angle += 0.005;
+ 
+ 
+
+  delay(200);
+  switch (headStatus) {
+    case 1: // down
+      image(snakeHeadDown, 200 - snakeHeadDown.width/2, 440 - snakeHeadDown.height/2 - 20);
+      headStatus = 2;
+      upDown = 2;   
+      break;
+    case 2:
+      image(snakeHead, 200 - snakeHead.width/2, 440 - snakeHead.height/2);
+
+      if(upDown == 1) {
+        headStatus = 1; 
+      } else {  // last was up
+        headStatus = 3; 
+      }
+      
+      break;
+    case 3: 
+      image(snakeHeadUp, 200 - snakeHeadUp.width/2, 440 - snakeHeadUp.height/2);
+      headStatus = 2;
+      upDown = 1;
+      break;
+  
   }
-  delay(100);
-  rotate(angle);
-  image(snakeHead, 200 - snakeHead.width/2, 440 - snakeHead.height/2);
 
 }
 
