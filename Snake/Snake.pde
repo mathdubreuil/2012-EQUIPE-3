@@ -341,7 +341,7 @@ void drawForMenu() {
   newGame.draw();
   
   String helpText =  "   Comment Jouer   ";
-  help = new Button((int)(width/2 - textWidth(helpText)/2), 320, helpText);
+  help = new Button((int)(width/2 - textWidth(helpText)/2), 360, helpText);
   help.draw();
   
   String systemeDynamiqueText =  "   Système Dynamique   ";
@@ -353,7 +353,7 @@ void drawForMenu() {
   buttonMask.draw();
   
   String fluteText =  "   Joueur de Flûte   ";
-  buttonFlute = new Button((int)(width/2 - textWidth(fluteText)/2), 360, fluteText);
+  buttonFlute = new Button((int)(width/2 - textWidth(fluteText)/2), 320, fluteText);
   buttonFlute.draw();
   
   String quitText = "   Quitter   ";
