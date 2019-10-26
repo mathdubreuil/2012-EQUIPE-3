@@ -9,6 +9,11 @@ final int stateEndGame = 4;
 final int stateSystemeDynamique = 5;
 final int stateMask = 6;
 final int stateCredit = 7;
+final int stateFlute = 8;
+
+float serpenty=880;
+float serpentspeed ;
+int stateFluteProgramme=0;
 
 int state = stateMenu;
 
@@ -17,13 +22,21 @@ SystemeDynamique systemeDynamique = null;
 ParticleSystem particleSystem = null;
 int countParticles = 250;
 int currentScore = 0;
+
 SoundFile mangerPomme;
 SoundFile mangerRocheMur;
 SoundFile clickButton;
 SoundFile menuMusic;
+SoundFile Z;
+SoundFile X;
+SoundFile C;
+SoundFile V;
 
 Movie video;
 
+PImage imgflute;
+PImage imgserpent;
+PImage imgfond;
 PImage fond;
 PImage imageMask;
 PImage imageTransformer;
@@ -41,6 +54,7 @@ Button buttonMask;
 Button help;
 Button quitGame;
 Button backMenu;
+Button buttonFlute;
 Button buttonCredit;
 
 Button newGamePause;
@@ -53,6 +67,7 @@ Button menuEndGame;
 int headStatus = 1; 
 int upDown = 1; 
 boolean movie = false;
+boolean flute = false;
 int activeFilterMode = 0;
 
 void setup() {
@@ -86,9 +101,21 @@ void setup() {
   
   menuMusic = new SoundFile(this, "menu_music.mp3");
   menuMusic.loop();
+  
+  imgflute = loadImage("flute.png");
+  
+  imgserpent = loadImage("serpent.png");
+  imgserpent.resize(600, 550);
+  imgfond= loadImage("fond.png");
+  
+  Z  = new SoundFile(this, "A.wav");
+  X  = new SoundFile(this, "E.wav"); 
+  C  = new SoundFile(this, "G.wav"); 
+  V  = new SoundFile(this, "B.wav");
 }
 
 void draw() {
+  imageMode(CORNER);
   // different states of the game uses different draw 
   switch(state) {
   case stateGame:
@@ -115,6 +142,8 @@ void draw() {
   case stateCredit:
     drawForCredit();
     break;
+  case stateFlute:
+    drawForFlute();
   default:
     break;
   }  
@@ -195,6 +224,37 @@ void drawForCredit(){
   if (movie == true) {
     image(video, 0, 0, 1000, 800);
   }
+}
+
+void drawForFlute(){
+  imageMode(CENTER);
+  image(imgfond,500,400);
+  textSize(37);
+  fill(203, 198, 130);
+  text("Découvrez ce qui arrive lorsque vous \nappuyer sur l'une des lettres z,x,c et v\nde votre clavier", 50,100);
+  image(imgflute, 850, 400);
+  image(imgserpent,50,serpenty);
+
+  
+  if (stateFluteProgramme == 1) {
+    serpenty=serpenty-serpentspeed;
+    } 
+  
+  if (stateFluteProgramme == 2) {
+   serpenty=serpenty+0.5;
+  }
+  
+  switch (activeFilterMode) {
+    case 1:
+      filter(ERODE);
+      break;
+    case 2:
+      filter(GRAY);
+      break;
+    case 3:
+      filter(DILATE);
+      break;
+    }
 }
 
 void drawForSystemeDynamique() {
@@ -288,12 +348,16 @@ void drawForMenu() {
   buttonSystemeDynamique = new Button((int)(width/2 - textWidth(systemeDynamiqueText)/2), 240, systemeDynamiqueText);
   buttonSystemeDynamique.draw();
   
-  String stateMask =  "   Masque   ";
-  buttonMask = new Button((int)(width/2 - textWidth(stateMask)/2), 280, stateMask);
+  String MaskText =  "   Masque   ";
+  buttonMask = new Button((int)(width/2 - textWidth(MaskText)/2), 280, MaskText);
   buttonMask.draw();
   
+  String fluteText =  "   Joueur de Flûte   ";
+  buttonFlute = new Button((int)(width/2 - textWidth(fluteText)/2), 360, fluteText);
+  buttonFlute.draw();
+  
   String quitText = "   Quitter   ";
-  quitGame = new Button((int)(width/2 - textWidth(quitText)/2), 360, quitText);
+  quitGame = new Button((int)(width/2 - textWidth(quitText)/2), 400, quitText);
   quitGame.draw();
   
   String stateCredit =  "   Crédit   ";
@@ -341,6 +405,7 @@ void startGame() {
   systemeDynamique = null;
   activeFilterMode = 0;
   movie = false;
+  flute = false;
   particleSystem = new ParticleSystem(countParticles);
   partie = new Partie();
 }
@@ -351,6 +416,7 @@ void startSystemeDynamique() {
   particleSystem = null;
   partie = null;
   movie = false;
+  flute = false;
   activeFilterMode = 0;
   systemeDynamique = new SystemeDynamique();
 }
@@ -360,11 +426,20 @@ void startMask() {
   partie = null;
   systemeDynamique = null;
   movie = false;
+  flute = false;
   tint(0, 255, 0, 200);
   background(imageSource);
   imageTransformer.mask(imageMask);
   activeFilterMode = 0;  
   image(imageTransformer, 0, 0);
+}
+
+void startFlute() {
+  particleSystem = null;
+  partie = null;
+  systemeDynamique = null;
+  movie = false;
+  flute = true;
 }
 
 void startCredit() {
@@ -373,13 +448,38 @@ void startCredit() {
   particleSystem = null;
   partie = null;
   systemeDynamique = null;
+  flute = false;
   activeFilterMode = 0;  
   video.loop();
   movie = true;
 }
+void keyReleased()
+{
+  if(state == stateFlute){
+    if(key == 'z') {
+      stateFluteProgramme=2;
+      Z.pause();
+    } 
+    
+    if(key == 'x') {
+      stateFluteProgramme=2;
+      X.pause();
+    } 
+    
+    if(key == 'c') {
+      stateFluteProgramme=2;
+      C.pause();
+    } 
+    
+    if(key == 'v') {
+      stateFluteProgramme=2;
+      V.pause();
+    } 
+  }
+}
 
 void keyPressed() {
-  if (state == stateGame || state == stateSystemeDynamique || state == stateMask || state == stateCredit) {
+  if (state == stateGame || state == stateSystemeDynamique || state == stateMask || state == stateCredit || state == stateFlute) {
     switch(key){
       case '1':
         startGame();
@@ -396,6 +496,10 @@ void keyPressed() {
       case '4':
         startCredit();
         state = stateCredit;
+        break;
+      case '5':
+        startFlute();
+        state = stateFlute;
         break;  
       default:
         break;
@@ -415,6 +519,36 @@ void keyPressed() {
         partie.derniereToucheAppuyer = keyCode;
         partie.toucheAppuyer();
       }
+    }
+    if(state == stateFlute){
+      if (key == 'z'){
+        if(!Z.isPlaying())
+          Z.play();
+        stateFluteProgramme=1;
+        serpentspeed=0.2;
+       }
+       
+       if (key == 'x') {
+         if(!X.isPlaying())
+           X.play();
+        stateFluteProgramme=1;
+        serpentspeed=0.4;
+      }
+      
+      if (key == 'c') {
+        if(!C.isPlaying())
+           C.play();
+        stateFluteProgramme=1;
+        serpentspeed=0.6;
+      }
+      
+      
+      if (key == 'v') {
+        if(!V.isPlaying())
+           V.play();
+        stateFluteProgramme=1;
+        serpentspeed=1;
+      }    
     }
     switch(keyCode) {
       case 'E':
@@ -466,6 +600,11 @@ void mousePressed(){
       menuMusic.stop();
       startMask();
       state = stateMask;
+    } else if (buttonFlute.over()) {
+      clickButton.play();
+      menuMusic.stop();
+      startFlute();
+      state = stateFlute;
     } else if (buttonCredit.over()) {
       clickButton.play();
       menuMusic.stop();
@@ -499,7 +638,12 @@ void mousePressed(){
           menuMusic.stop();
           video.loop();
           state = stateCredit; 
-        }else{
+        } else if (flute == true) {
+          clickButton.play();
+          menuMusic.stop();
+          startFlute();
+          state = stateFlute;
+        } else{
           clickButton.play();
           menuMusic.stop();
           state = stateMask;
@@ -521,7 +665,12 @@ void mousePressed(){
           menuMusic.stop();
           startCredit();
           state = stateCredit; 
-        }else{
+        } else if (flute == true) {
+          clickButton.play();
+          menuMusic.stop();
+          startFlute();
+          state = stateFlute;
+        } else{
           clickButton.play();
           menuMusic.stop();
           state = stateMask; 
