@@ -22,6 +22,9 @@ SoundFile menuMusic;
 
 Movie video;
 
+PFont typoTitre;
+PFont typoTexte;
+
 PImage fond;
 PImage imageMask;
 PImage imageTransformer;
@@ -53,6 +56,9 @@ void setup() {
   
   mangerRocheMur = new SoundFile(this, "explosion_very_small_pop.mp3");
   mangerPomme = new SoundFile(this, "zapsplat_human_eat_bite_potato_raw_single_002_39698.mp3");
+  
+  typoTitre = loadFont("ANTPB.TTF");
+  typoTexte = loadFont("HelveticaNeue-Medium-64.vlw");
   
   imageSource = loadImage("journe2.jpg");
   imageSource.resize(1000, 800);
@@ -105,17 +111,21 @@ void drawForEnd() {
   
   fill(#6c5f48, 30);
   rect(width/2 - 200, height/2 - 150, 400, 300, 7);
+  textFont(typoTitre);
   textSize(60);
   fill(0);
 
+  textFont(typoTitre);
   String endGameTitle = " JEU TERMINÉ ";
   text(endGameTitle, width/2 - textWidth(endGameTitle)/2, height/2 - 80);
   textSize(28);
   
+  textFont(typoTitre);
   String newGameText =  "   Nouvelle partie   ";
   newGameEndGame = new Button((int)(width/2 - textWidth(newGameText)/2), height/2 - 40 , newGameText);
   newGameEndGame.draw();
   
+  textFont(typoTitre);
   String menuText =  "   Menu principale   ";
   menuEndGame = new Button((int)(width/2 - textWidth(menuText)/2), height/2 + 20, menuText);
   menuEndGame.draw();
@@ -129,18 +139,23 @@ void drawForPause() {
   textSize(60);
   fill(0);
 
+  textFont(typoTitre);
   String pauseTitle = " PAUSE ";
   text(pauseTitle, width/2 - textWidth(pauseTitle)/2, height/2 - 100);
   textSize(28);
 
+  
+  textFont(typoTexte);
   String resumeGameText =  "   Reprendre la partie   ";
   resumeGamePause = new Button((int)(width/2 - textWidth(resumeGameText)/2), height/2 - 60, resumeGameText);
   resumeGamePause.draw();
   
+  textFont(typoTexte);
   String newGameText =  "   Nouvelle partie   ";
   newGamePause = new Button((int)(width/2 - textWidth(newGameText)/2), height/2 + 10, newGameText);
   newGamePause.draw();
   
+  textFont(typoTexte);
   String menuText =  "   Menu principale   ";
   menuPause = new Button((int)(width/2 - textWidth(menuText)/2), height/2 + 80, menuText);
   menuPause.draw();
@@ -185,23 +200,28 @@ void drawForHelp() {
   image(fond, 0, 0);
   strokeWeight(1);
 
+  textFont(typoTexte);
   String backText =  "  Retour  ";
   backMenu = new Button(50, 50, backText);
   backMenu.draw();
   
+  textFont(typoTexte);
   textSize(80);
 
+  textFont(typoTitre);
   String title = "COMMENT JOUER ?";
   text(title, width/2 - textWidth(title)/2, 200);
   strokeWeight(5);
   line(120, 250 , width - 120, 250);
   
+  textFont(typoTexte);
   textSize(22);
   String intro = "Déplacer le serpent pour manger les pommes! Éviter les obstables et les murs!";
   text(intro, width/2 - textWidth(intro)/2, 300);
 
   line(120, 340 , width - 120, 340);
   
+  textFont(typoTexte);
   textSize(22);
   String movement = "← ↑ ↓ →  : Déplacer le serpent";
   text(movement, width/2 - textWidth(movement)/2, 380);
@@ -220,9 +240,11 @@ void drawForMenu() {
   textSize(150);
   fill(0);
 
+  textFont(typoTitre);
   String title = "SNAKE";
   text(title, width/2 - textWidth(title)/2, 200);
   
+  textFont(typoTexte);
   textSize(28);
   strokeWeight(1);
 
