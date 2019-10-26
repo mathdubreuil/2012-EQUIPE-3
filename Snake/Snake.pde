@@ -91,8 +91,8 @@ void setup() {
   
   video = new Movie(this, "video.mp4");
   
-  typoTitre = loadFont("HelveticaNeue-Medium-64.vlw");
-  typoTexte = loadFont("BellMTBold-48.vlw");
+  typoTitre = loadFont("BellMTBold-48.vlw");
+  typoTexte = loadFont("HelveticaNeue-Medium-64.vlw");
   
   snakeBody = loadImage("Serpent_corps.png");
   snakeBody.resize(868, 420);
@@ -367,7 +367,7 @@ void drawForMenu() {
   newGame = new Button((int)(width/2 - textWidth(newGameText)/2), 110, newGameText);
   newGame.draw();
   
-  String helpText =  "   Comment Jouer   ";
+  String helpText =  "   Comment jouer   ";
   help = new Button((int)(width/2 - textWidth(helpText)/2), 310, helpText);
   help.draw();
   
@@ -379,7 +379,7 @@ void drawForMenu() {
   buttonMask = new Button((int)(width/2 - textWidth(MaskText)/2), 210, MaskText);
   buttonMask.draw();
   
-  String fluteText =  "   Joueur de Flûte   ";
+  String fluteText =  "   Joueur de flûte   ";
   buttonFlute = new Button((int)(width/2 - textWidth(fluteText)/2), 260, fluteText);
   buttonFlute.draw();
   
