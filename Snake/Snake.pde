@@ -253,7 +253,7 @@ void drawForFlute(){
   fill(203, 198, 130);
   textFont(typoTexte);
   textSize(37);
-  text("Découvrez ce qui arrive lorsque vous \nappuyer sur l'une des lettres z,x,c et v\nde votre clavier", 50,100);
+  text("Découvrez ce qui arrive lorsque vous \nappuyez sur l'une des lettres z, x, c et v\nde votre clavier", 50,100);
   image(imgflute, 850, 400);
   image(imgserpent,50,serpenty);
 
