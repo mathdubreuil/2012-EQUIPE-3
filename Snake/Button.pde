@@ -17,7 +17,7 @@ class Button {
     } 
     
     rect(x, y, textWidth(text), 40);
-    fill(0);
+    fill(10);
     text(text, x, y + 30);
   }
   

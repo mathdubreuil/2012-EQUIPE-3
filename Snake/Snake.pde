@@ -241,12 +241,20 @@ void drawForGame() {
 }
 
 void drawForCredit(){
+  
   if (movie == true) {
     image(video, 0, 0, 1000, 800);
   }
+  strokeWeight(1);
+  textSize(28);
+  String backText =  "  Retour  ";
+  backMenu = new Button(50, 50, backText);
+  backMenu.draw();
 }
 
 void drawForFlute(){
+  
+  
   imageMode(CENTER);
   image(imgfond,500,400);
   
@@ -265,7 +273,11 @@ void drawForFlute(){
   if (stateFluteProgramme == 2) {
    serpenty=serpenty+0.5;
   }
-  
+  strokeWeight(1);
+  textSize(28);
+  String backText =  "  Retour  ";
+  backMenu = new Button(50, 30, backText);
+  backMenu.draw();
   switch (activeFilterMode) {
     case 1:
       filter(ERODE);
@@ -280,6 +292,12 @@ void drawForFlute(){
 }
 
 void drawForSystemeDynamique() {
+  strokeWeight(1);
+  textSize(28);
+  String backText =  "  Retour  ";
+  backMenu = new Button(50, 50, backText);
+  backMenu.draw();
+  
   if (systemeDynamique != null) {
     systemeDynamique.dessinerSystemeDynamique();
   }
@@ -298,6 +316,13 @@ void drawForSystemeDynamique() {
 }
 
 void drawForMask() {
+  strokeWeight(1);
+  textSize(28);
+  String backText =  "  Retour  ";
+  backMenu = new Button(50, 50, backText);
+  backMenu.draw();
+  
+  
   switch (activeFilterMode) {
     case 1:
       filter(ERODE);
@@ -388,7 +413,7 @@ void drawForMenu() {
   quitGame.draw();
   
   String stateCredit =  "   Crédits   ";
-  buttonCredit = new Button((int)( textWidth(stateCredit)/2), 700, stateCredit);
+  buttonCredit = new Button((int)( textWidth(stateCredit)/2), 600, stateCredit);
   buttonCredit.draw();
 
   image(apple, 50, height - 770);
@@ -470,6 +495,11 @@ void startFlute() {
 }
 
 void startCredit() {
+  String backText =  "  Retour  ";
+  backMenu = new Button(50, 50, backText);
+  backMenu.draw();
+  
+  
   frameRate(60);
   tint(255, 255, 255, 255);
   particleSystem = null;
@@ -588,14 +618,16 @@ void keyPressed() {
         activeFilterMode = 3;
         break;
       case 'P':
-        if (partie != null) {
-          state = statePause;
-          partie.pause = true;
-        } else if (movie == true){
-          state = statePause;
-          video.pause();
-        } else{
-          state = statePause;
+        if(state == stateGame) {
+          if (partie != null) {
+            state = statePause;
+            partie.pause = true;
+          } else if (movie == true){
+            state = statePause;
+            video.pause();
+          } else{
+            state = statePause;
+          }
         }
         break;
       default:
@@ -607,6 +639,7 @@ void keyPressed() {
 
 void mousePressed(){
   // check which state to see if the user clicked on any buttons
+  
   switch(state) {
   case stateMenu:
     if (newGame.over()) {    
@@ -721,7 +754,31 @@ void mousePressed(){
       menuMusic.loop();
     }
     break;
-  default:
+    case stateSystemeDynamique:
+     if (backMenu.over()) {
+       clickButton.play();
+       state = stateMenu;
+    } 
+    break;
+    case stateMask:
+     if (backMenu.over()) {
+       clickButton.play();
+       state = stateMenu;
+    } 
+      break;
+    case stateCredit:
+     if (backMenu.over()) {
+       clickButton.play();
+       state = stateMenu;
+    } 
+      break;
+    case stateFlute:
+     if (backMenu.over()) {
+       clickButton.play();
+       state = stateMenu;
+    } 
+    default:
+      
     break;
   } 
 }
